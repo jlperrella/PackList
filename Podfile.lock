@@ -1,0 +1,22 @@
+PODS:
+  - ChameleonFramework (2.1.0):
+    - ChameleonFramework/Default (= 2.1.0)
+  - ChameleonFramework/Default (2.1.0)
+  - SVProgressHUD (2.2.5)
+
+DEPENDENCIES:
+  - ChameleonFramework
+  - SVProgressHUD
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ChameleonFramework
+    - SVProgressHUD
+
+SPEC CHECKSUMS:
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+
+PODFILE CHECKSUM: 5a4434f2232fd6a5c7b998783511ce4e753a53d7
+
+COCOAPODS: 1.6.1
