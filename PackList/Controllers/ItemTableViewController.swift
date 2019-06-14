@@ -10,8 +10,14 @@ import UIKit
 
 class ItemTableViewController: UITableViewController {
 
-    override func viewDidLoad() {
+  
+ 
+  
+  
+  override func viewDidLoad() {
         super.viewDidLoad()
+    
+      self.navigationController?.navigationBar.isTranslucent = false
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

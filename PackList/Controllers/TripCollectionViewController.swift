@@ -14,22 +14,36 @@ private let reuseIdentifier = "Cell"
 
 
 class TripCollectionViewController: UICollectionViewController {
+
   
   @IBOutlet weak var addTripButton: UIBarButtonItem!
   
   var trips = [Trip]()
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+  var colorArray = NSArray(ofColorsWith:ColorScheme.analogous, with:UIColor.green, flatScheme:true)
+  
 
 
     override func viewDidLoad() {
+      
+//      var dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+//      print("file path \(dataFilePath)")
       super.viewDidLoad()
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
-      collectionView.backgroundColor = UIColor.flatForestGreenColorDark()
+      //collectionView.backgroundColor = UIColor.flatCoffee()
+      
+      self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+      self.navigationController?.navigationBar.shadowImage = UIImage()
+      self.navigationController?.navigationBar.isTranslucent = true
       loadTrips()
     }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    self.navigationController?.navigationBar.isTranslucent = true
+  }
 
     /*
     // MARK: - Navigation
@@ -55,7 +69,7 @@ class TripCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! CollectionViewCell
-      cell.setCell(text: trips[indexPath.row].name!, color: UIColor.flatForestGreenColorDark())
+      cell.setCell(text: trips[indexPath.row].name!, color: colorArray![indexPath.row] as! UIColor)
     
       return cell
     }
@@ -79,7 +93,7 @@ class TripCollectionViewController: UICollectionViewController {
   
   func loadTrips() {
     let request: NSFetchRequest<Trip> = Trip.fetchRequest()
-
+    
     do {
       trips = try context.fetch(request)
     }catch{
@@ -88,7 +102,6 @@ class TripCollectionViewController: UICollectionViewController {
     collectionView.reloadData()
   }
   
-  
   @IBAction func AddTripButtonPressed(_ sender: UIBarButtonItem) {
     var textField = UITextField()
     
@@ -96,7 +109,7 @@ class TripCollectionViewController: UICollectionViewController {
     let action = UIAlertAction(title: "Add", style: .default) { (action) in
       
       if textField.text != "" {
-        let newTrip = Trip()
+        let newTrip = Trip(context: self.context)
         newTrip.name = textField.text!
         self.trips.append(newTrip)
         self.saveTrips()
