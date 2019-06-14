@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 import ChameleonFramework
 
 private let reuseIdentifier = "Cell"
@@ -14,18 +15,20 @@ private let reuseIdentifier = "Cell"
 
 class TripCollectionViewController: UICollectionViewController {
   
-  var trips: [String] = ["Iceland", "Gambier", "London"]
+  @IBOutlet weak var addTripButton: UIBarButtonItem!
+  
+  var trips = [Trip]()
+  let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
+      super.viewDidLoad()
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+      collectionView.backgroundColor = UIColor.flatForestGreenColorDark()
+      loadTrips()
     }
 
     /*
@@ -52,7 +55,7 @@ class TripCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! CollectionViewCell
-      cell.setCell(text: trips[indexPath.row], color: UIColor.flatPlum())
+      cell.setCell(text: trips[indexPath.row].name!, color: UIColor.flatForestGreenColorDark())
     
       return cell
     }
@@ -63,6 +66,58 @@ class TripCollectionViewController: UICollectionViewController {
   }
   
 
+  // MARK: Data Manipulation
+  
+  func saveTrips(){
+    do {
+      try context.save()
+    } catch {
+      print("error saving trips \(error)")
+    }
+    loadTrips()
+  }
+  
+  func loadTrips() {
+    let request: NSFetchRequest<Trip> = Trip.fetchRequest()
+
+    do {
+      trips = try context.fetch(request)
+    }catch{
+      print ("error loading trips \(error)")
+    }
+    collectionView.reloadData()
+  }
+  
+  
+  @IBAction func AddTripButtonPressed(_ sender: UIBarButtonItem) {
+    var textField = UITextField()
+    
+    let alert = UIAlertController(title: "Add Trip", message: "", preferredStyle: .alert)
+    let action = UIAlertAction(title: "Add", style: .default) { (action) in
+      
+      if textField.text != "" {
+        let newTrip = Trip()
+        newTrip.name = textField.text!
+        self.trips.append(newTrip)
+        self.saveTrips()
+      }else{
+        action.isEnabled = false
+      }
+    }
+    alert.addTextField { (alertTextField) in
+      alertTextField.placeholder = "Add Trip"
+      textField = alertTextField
+    }
+    
+    alert.addAction(action)
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+    
+    present(alert, animated: true, completion: nil)
+    
+    
+  }
+  
+  
     // MARK: UICollectionViewDelegate
 
     /*

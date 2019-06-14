@@ -51,9 +51,14 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Trips" id="qTY-rI-grO">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="lWY-sQ-z6k"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="lWY-sQ-z6k">
+                            <connections>
+                                <action selector="AddTripButtonPressed:" destination="Z1w-QG-RlI" id="5ge-S0-DDG"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addTripButton" destination="lWY-sQ-z6k" id="Mvs-TQ-zR6"/>
                         <segue destination="IHU-ca-hZ9" kind="show" identifier="itemListSegue" id="q4M-af-9kL"/>
                     </connections>
                 </collectionViewController>
@@ -101,7 +106,7 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" red="0.0" green="0.56904578210000001" blue="0.57461684940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
