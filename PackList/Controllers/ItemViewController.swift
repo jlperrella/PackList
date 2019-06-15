@@ -1,19 +1,19 @@
 //
-//  ItemTableViewController.swift
+//  ItemViewController.swift
 //  PackList
 //
-//  Created by jp on 2019-06-13.
+//  Created by jp on 2019-06-14.
 //  Copyright © 2019 Jordan Perrella. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class ItemTableViewController: UITableViewController {
+class ItemViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-  @IBOutlet weak var addItemButton: UIBarButtonItem!
+  @IBOutlet weak var itemsTableView: UITableView!
   
-
+  
   var items = [Item]()
   
   var selectedTrip: Trip?{
@@ -25,30 +25,33 @@ class ItemTableViewController: UITableViewController {
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   
   override func viewDidLoad() {
-      super.viewDidLoad()
+    super.viewDidLoad()
+    
+    itemsTableView.delegate = self
+    itemsTableView.dataSource = self
     
     loadItems()
-
-    }
-
-    // MARK: UITableview datasource
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-      return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return items.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath)
-      let item = items[indexPath.row]
-      cell.textLabel?.text = item.name
     
-      return cell
-    }
-
+  }
+  
+  // MARK: UITableview datasource
+  
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return items.count
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath)
+    let item = items[indexPath.row]
+    cell.textLabel?.text = item.name
+    
+    return cell
+  }
+  
   // MARK: UITableViewDelegateMethods
   
   
@@ -97,7 +100,7 @@ class ItemTableViewController: UITableViewController {
     } catch{
       print("Error saving context \(error)")
     }
-    self.tableView.reloadData()
+    self.itemsTableView.reloadData()
   }
   
   func loadItems() {
@@ -112,3 +115,7 @@ class ItemTableViewController: UITableViewController {
     }
   }
 }
+  
+
+  
+

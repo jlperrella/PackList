@@ -20,40 +20,35 @@ class TripCollectionViewController: UICollectionViewController {
   
   var trips = [Trip]()
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-  var colorArray = NSArray(ofColorsWith:ColorScheme.analogous, with:UIColor.green, flatScheme:true)
+//  var colorArray = NSArray(ofColorsWith:ColorScheme.analogous, with:UIColor.green, flatScheme:true)
   
-
 
     override func viewDidLoad() {
       
 //      var dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
 //      print("file path \(dataFilePath)")
-      super.viewDidLoad()
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
-      //collectionView.backgroundColor = UIColor.flatCoffee()
       
+      super.viewDidLoad()
+      
+      self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+
       self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
       self.navigationController?.navigationBar.shadowImage = UIImage()
       self.navigationController?.navigationBar.isTranslucent = true
       loadTrips()
     }
+
   
-  override func viewDidAppear(_ animated: Bool) {
-    self.navigationController?.navigationBar.isTranslucent = true
+    // MARK: - Navigation
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    let destinationVC = segue.destination as! ItemTableViewController
+    
+    if let indexPath = collectionView.indexPathsForSelectedItems {
+      destinationVC.selectedTrip = trips[indexPath[0].row]
+    }
   }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -69,17 +64,20 @@ class TripCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! CollectionViewCell
-      cell.setCell(text: trips[indexPath.row].name!, color: colorArray![indexPath.row] as! UIColor)
-    
+      cell.setCell(text: trips[indexPath.row].name!, color: (UIColor.flatBlack()?.withAlphaComponent(0.98))!)
+ 
       return cell
     }
   
+  
+
+  // MARK: UICollectionViewDelegateMethods
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     performSegue(withIdentifier: "itemListSegue", sender: self)
   }
   
-
+  
   // MARK: Data Manipulation
   
   func saveTrips(){
@@ -107,7 +105,7 @@ class TripCollectionViewController: UICollectionViewController {
     
     let alert = UIAlertController(title: "Add Trip", message: "", preferredStyle: .alert)
     let action = UIAlertAction(title: "Add", style: .default) { (action) in
-      
+    alert.view.tintColor = UIColor.black
       if textField.text != "" {
         let newTrip = Trip(context: self.context)
         newTrip.name = textField.text!
@@ -126,40 +124,7 @@ class TripCollectionViewController: UICollectionViewController {
     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
     
     present(alert, animated: true, completion: nil)
-    
-    
+    alert.view.tintColor = UIColor.flatNavyBlueColorDark()
   }
   
-  
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
 }
