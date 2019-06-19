@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PACK  LIST" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="152-AX-2FG">
-                                <rect key="frame" x="76" y="479" width="262" height="67"/>
+                                <rect key="frame" x="76" y="512" width="262" height="67"/>
                                 <fontDescription key="fontDescription" name="BodoniSvtyTwoITCTT-Book" family="Bodoni 72" pointSize="55"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -34,7 +34,7 @@
                             <constraint firstAttribute="bottom" secondItem="ceY-6E-gj3" secondAttribute="bottom" id="QAn-er-00f"/>
                             <constraint firstItem="ceY-6E-gj3" firstAttribute="trailing" secondItem="xK0-wA-Ifu" secondAttribute="trailing" id="RZ2-HV-JTA"/>
                             <constraint firstItem="ceY-6E-gj3" firstAttribute="top" secondItem="ffK-Ne-hif" secondAttribute="top" id="bvP-Uj-FgR"/>
-                            <constraint firstItem="xK0-wA-Ifu" firstAttribute="bottom" secondItem="152-AX-2FG" secondAttribute="bottom" constant="316" id="cNR-ZS-hic"/>
+                            <constraint firstItem="xK0-wA-Ifu" firstAttribute="bottom" secondItem="152-AX-2FG" secondAttribute="bottom" constant="283" id="cNR-ZS-hic"/>
                             <constraint firstItem="ceY-6E-gj3" firstAttribute="leading" secondItem="xK0-wA-Ifu" secondAttribute="leading" id="gUB-HP-mw1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xK0-wA-Ifu"/>

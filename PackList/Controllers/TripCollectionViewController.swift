@@ -12,9 +12,7 @@ import ChameleonFramework
 
 private let reuseIdentifier = "Cell"
 
-
 class TripCollectionViewController: UICollectionViewController {
-
   
   @IBOutlet weak var addTripButton: UIBarButtonItem!
   
@@ -35,14 +33,20 @@ class TripCollectionViewController: UICollectionViewController {
       self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
       self.navigationController?.navigationBar.shadowImage = UIImage()
       self.navigationController?.navigationBar.isTranslucent = true
-      loadTrips()
+      
     }
+  
+  
+  override func viewWillAppear(_ animated: Bool) {
+    collectionView.reloadData()
+    loadTrips()
+  }
 
   
     // MARK: - Navigation
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    let destinationVC = segue.destination as! ItemTableViewController
+    let destinationVC = segue.destination as! ItemViewController
     
     if let indexPath = collectionView.indexPathsForSelectedItems {
       destinationVC.selectedTrip = trips[indexPath[0].row]

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import ChameleonFramework
 
 class ItemViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -22,6 +23,9 @@ class ItemViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
   }
   
+  let attributes: [NSAttributedString.Key: Any] =
+    [NSAttributedString.Key.strikethroughStyle: 2]
+  
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   
   override func viewDidLoad() {
@@ -29,8 +33,11 @@ class ItemViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     itemsTableView.delegate = self
     itemsTableView.dataSource = self
-    
+    itemsTableView.rowHeight = 60.0
     loadItems()
+    
+    
+    
     
   }
   
@@ -49,10 +56,46 @@ class ItemViewController: UIViewController, UITableViewDelegate, UITableViewData
     let item = items[indexPath.row]
     cell.textLabel?.text = item.name
     
+    cell.textLabel?.attributedText = item.isPacked ? NSAttributedString(string: item.name!, attributes: attributes) : NSAttributedString(string: item.name!, attributes: .none)
+    
+    
     return cell
   }
   
   // MARK: UITableViewDelegateMethods
+  
+  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    
+    let deleteAction = UIContextualAction(style: .normal, title: "Delete", handler: { (ac: UIContextualAction, view: UIView, success:(Bool) -> Void) in
+      self.context.delete(self.items[indexPath.row])
+      self.items.remove(at: indexPath.row)
+      self.saveItems()
+      success(true)
+    })
+    
+    deleteAction.image = UIImage(named: "Trash-Icon")
+    deleteAction.backgroundColor = UIColor.flatRed()
+    
+    return UISwipeActionsConfiguration(actions: [deleteAction])
+  }
+  
+  
+  
+  func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    
+    let packedAction = UIContextualAction(style: .normal, title: "Packed", handler: { (ac: UIContextualAction, view: UIView, success:(Bool) -> Void) in
+      self.items[indexPath.row].isPacked = !self.items[indexPath.row].isPacked
+      self.saveItems()
+      success(true)
+    })
+    
+    packedAction.image = UIImage(named: "Flag-Icon")
+    packedAction.backgroundColor = UIColor.flatBlue()
+    
+    
+    return UISwipeActionsConfiguration(actions: [packedAction])
+  }
+  
   
   
   
@@ -100,7 +143,7 @@ class ItemViewController: UIViewController, UITableViewDelegate, UITableViewData
     } catch{
       print("Error saving context \(error)")
     }
-    self.itemsTableView.reloadData()
+    itemsTableView.reloadData()
   }
   
   func loadItems() {
@@ -114,6 +157,44 @@ class ItemViewController: UIViewController, UITableViewDelegate, UITableViewData
       print("Error loading items \(error)")
     }
   }
+  
+  @IBAction func deleteTripButtonPressed(_ sender: Any) {
+    
+    let alert = UIAlertController(title: "Delete Trip", message: "Are you sure you want to delete this entire trip?", preferredStyle: .alert)
+    
+    let action = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+      
+      let request: NSFetchRequest<Item> = Item.fetchRequest()
+      let predicate = NSPredicate(format: "parentTrip.name MATCHES %@", self.selectedTrip!.name!)
+      
+      request.predicate = predicate
+      
+      do {
+        self.items = try self.context.fetch(request)
+        
+        for item in self.items{
+          let i = self.items.firstIndex(of:item)!
+          self.context.delete(self.items[i])
+          self.items.remove(at: i)
+        }
+        
+        self.context.delete(self.selectedTrip!)
+        _ = self.navigationController?.popToRootViewController(animated: true)
+        
+        
+      } catch{
+        print("Error deleting trip \(error)")
+      }
+      self.saveItems()
+    }
+    
+    alert.addAction(action)
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+    alert.view.tintColor = UIColor.flatNavyBlueColorDark()
+    present(alert, animated: true, completion: nil)
+    
+  }
+  
 }
   
 

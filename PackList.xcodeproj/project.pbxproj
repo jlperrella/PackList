@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9D6A069E0B6C6D2A1262B234 /* Pods_PackList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93D52117C440B3992FBF8502 /* Pods_PackList.framework */; };
 		E827263322B2D8FB001B1A3C /* TripCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E827263222B2D8FB001B1A3C /* TripCollectionViewController.swift */; };
-		E827263522B2D93D001B1A3C /* ItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E827263422B2D93D001B1A3C /* ItemTableViewController.swift */; };
 		E827263A22B2D9CD001B1A3C /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E827263822B2D9CD001B1A3C /* CollectionViewCell.swift */; };
 		E827263B22B2D9CD001B1A3C /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E827263922B2D9CD001B1A3C /* CollectionViewCell.xib */; };
 		E8274CB022B47D4200DF0E01 /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8274CAF22B47D4200DF0E01 /* ItemViewController.swift */; };
@@ -25,7 +24,6 @@
 		9B474E25D5A6C6893F966CFA /* Pods-PackList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PackList.release.xcconfig"; path = "Target Support Files/Pods-PackList/Pods-PackList.release.xcconfig"; sourceTree = "<group>"; };
 		CC0EC8AD16A21637A676BA85 /* Pods-PackList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PackList.debug.xcconfig"; path = "Target Support Files/Pods-PackList/Pods-PackList.debug.xcconfig"; sourceTree = "<group>"; };
 		E827263222B2D8FB001B1A3C /* TripCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCollectionViewController.swift; sourceTree = "<group>"; };
-		E827263422B2D93D001B1A3C /* ItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewController.swift; sourceTree = "<group>"; };
 		E827263822B2D9CD001B1A3C /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		E827263922B2D9CD001B1A3C /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		E8274CAF22B47D4200DF0E01 /* ItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
@@ -72,7 +70,6 @@
 			children = (
 				E8274CAF22B47D4200DF0E01 /* ItemViewController.swift */,
 				E827263222B2D8FB001B1A3C /* TripCollectionViewController.swift */,
-				E827263422B2D93D001B1A3C /* ItemTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -253,7 +250,6 @@
 				E827263A22B2D9CD001B1A3C /* CollectionViewCell.swift in Sources */,
 				E8788BDB22B2BDED00360001 /* AppDelegate.swift in Sources */,
 				E827263322B2D8FB001B1A3C /* TripCollectionViewController.swift in Sources */,
-				E827263522B2D93D001B1A3C /* ItemTableViewController.swift in Sources */,
 				E8788BE322B2BDED00360001 /* PackList.xcdatamodeld in Sources */,
 				E8274CB022B47D4200DF0E01 /* ItemViewController.swift in Sources */,
 			);
